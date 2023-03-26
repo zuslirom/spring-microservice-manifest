@@ -5,8 +5,8 @@
 replicaCount: 1
 
 image:
-  repository: loansource
-  tag: 0.1
+  repository: docker.io/library/loansource
+  tag: latest
   pullPolicy: IfNotPresent
 
 service:
