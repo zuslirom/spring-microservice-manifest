@@ -30,12 +30,12 @@ spec:
               protocol: TCP
           livenessProbe:
             httpGet:
-              path: /
-              port: http
+              port: 9000
+              path: /actuator/health/liveness
           readinessProbe:
             httpGet:
-              path: /
-              port: http
+              port: 9000
+              path: /actuator/health/readiness
           resources:
 {{ toYaml .Values.resources | indent 12 }}
     {{- with .Values.nodeSelector }}
