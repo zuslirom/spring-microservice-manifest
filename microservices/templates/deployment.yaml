@@ -29,10 +29,12 @@ spec:
               containerPort: 80
               protocol: TCP
           livenessProbe:
+            initialDelaySeconds: 60
             httpGet:
               port: 9000
               path: /actuator/health/liveness
           readinessProbe:
+            initialDelaySeconds: 60
             httpGet:
               port: 9000
               path: /actuator/health/readiness
