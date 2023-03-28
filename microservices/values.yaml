@@ -9,6 +9,17 @@ image:
   tag: latest
   pullPolicy: IfNotPresent
 
+imageOrderService:
+  repository: docker.io/library/order-service
+  tag: latest
+  pullPolicy: IfNotPresent
+
+imageNotificationService:
+  repository: docker.io/library/notification-service
+  tag: latest
+  pullPolicy: IfNotPresent
+
+
 service:
   type: ClusterIP
   port: 80

@@ -92,3 +92,92 @@ spec:
         name: kafka-service
         ports:
         - containerPort: 9092
+
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-service
+  labels:
+    app: order-service
+    chart: order-service
+    release: {{ .Release.Name }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  revisionHistoryLimit: 3
+  selector:
+    matchLabels:
+      app: order-service
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: order-service
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: order-service
+          image: "{{ .Values.imageOrderService.repository }}:{{ .Values.imageOrderService.tag }}"
+          imagePullPolicy: {{ .Values.imageOrderService.pullPolicy }}
+          ports:
+            - name: http2
+              containerPort: 8082
+              protocol: TCP
+            - name: http
+              containerPort: {{ .Values.service.targetPort }}
+              protocol: TCP
+          livenessProbe:
+            initialDelaySeconds: 60
+            httpGet:
+              port: http
+              path: /actuator/health/liveness
+          readinessProbe:
+            initialDelaySeconds: 60
+            httpGet:
+              port: http
+              path: /actuator/health/readiness
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notification-service
+  labels:
+    app: notification-service
+    chart: notification-service
+    release: {{ .Release.Name }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  revisionHistoryLimit: 3
+  selector:
+    matchLabels:
+      app: notification-service
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: notification-service
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: notification-service
+          image: "{{ .Values.imageNotificationService.repository }}:{{ .Values.imageNotificationService.tag }}"
+          imagePullPolicy: {{ .Values.imageNotificationService.pullPolicy }}
+          ports:
+            - name: http2
+              containerPort: 8082
+              protocol: TCP
+            - name: http
+              containerPort: {{ .Values.service.targetPort }}
+              protocol: TCP
+          livenessProbe:
+            initialDelaySeconds: 60
+            httpGet:
+              port: http
+              path: /actuator/health/liveness
+          readinessProbe:
+            initialDelaySeconds: 60
+            httpGet:
+              port: http
+              path: /actuator/health/readiness
