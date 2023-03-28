@@ -25,21 +25,21 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
-            - name: http
+            - name: http2
               containerPort: 8082
               protocol: TCP
-            - name: http2
-              containerPort: 8080
+            - name: http
+              containerPort: {{ .Values.service.targetPort }}
               protocol: TCP
           livenessProbe:
             initialDelaySeconds: 60
             httpGet:
-              port: 9000
+              port: http
               path: /actuator/health/liveness
           readinessProbe:
             initialDelaySeconds: 60
             httpGet:
-              port: 9000
+              port: http
               path: /actuator/health/readiness
           resources:
 {{ toYaml .Values.resources | indent 12 }}
