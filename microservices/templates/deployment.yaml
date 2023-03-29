@@ -83,11 +83,7 @@ spec:
         - name: KAFKA_LISTENERS
           value: PLAINTEXT://:9092
         - name: KAFKA_ADVERTISED_LISTENERS
-          value: PLAINTEXT://:9092
-        - name: KAFKA_LISTENER_SECURITY_PROTOCOL_MAP
-          value: LISTENER_INTERNAL:PLAINTEXT
-        - name: KAFKA_INTER_BROKER_LISTENER_NAME
-          value: LISTENER_INTERNAL
+          value: PLAINTEXT://kafka-service:9092
         image: wurstmeister/kafka
         imagePullPolicy: IfNotPresent
         name: kafka-service
