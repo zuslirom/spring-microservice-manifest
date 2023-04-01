@@ -77,8 +77,6 @@ spec:
       hostname: kafka-service
       containers:
       - env:
-        - name: KAFKA_PORT
-          value: "9092"
         - name: KAFKA_BROKER_ID
           value: "1"
         - name: KAFKA_ZOOKEEPER_CONNECT
@@ -86,7 +84,7 @@ spec:
         - name: KAFKA_LISTENERS
           value: PLAINTEXT://:9092
         - name: KAFKA_ADVERTISED_LISTENERS
-          value: PLAINTEXT://kafka-service:9092
+          value: PLAINTEXT://localhost:9092
         image: wurstmeister/kafka
         imagePullPolicy: IfNotPresent
         name: kafka-service
